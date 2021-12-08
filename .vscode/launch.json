@@ -6,17 +6,9 @@
     "configurations": [
         {
         
-            "name": "iPhone 11 Pro Max",
+            "name": "Simulator",
             "request": "launch",
             "type": "dart",
-            "deviceId": "A3A6B4C2-8747-4633-B6AB-5F7E078B146E"
-        },
-        {
-            "name": "S10+",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "RQ8M503MHBY"
-        },
-        
+        },        
     ]
 }
