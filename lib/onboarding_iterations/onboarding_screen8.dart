@@ -1,3 +1,4 @@
+import 'package:pred/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen8 extends StatelessWidget {
@@ -49,7 +50,7 @@ class OnboardingScreen8 extends StatelessWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                _buildButtonNext(context),
+                buildButtonNext(context),
                 const SizedBox(
                   height: 50,
                 ),
@@ -60,39 +61,4 @@ class OnboardingScreen8 extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildButtonNext(context) => GestureDetector(
-        onTap: () =>
-            Navigator.pushReplacementNamed(context, "/9", arguments: 8),
-        child: Container(
-          width: 216,
-          height: 71,
-          decoration: BoxDecoration(
-              color: const Color(0xFF3F4A64),
-              borderRadius: BorderRadius.circular(80),
-              boxShadow: [
-                BoxShadow(
-                    offset: const Offset(0, 36),
-                    blurRadius: 60,
-                    color: const Color(0xFF7e828d).withOpacity(0.7))
-              ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Text(
-                "Next",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
-              Container(
-                width: 60,
-                height: 37,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50)),
-                child: const Icon(Icons.arrow_forward_ios_outlined, size: 14),
-              )
-            ],
-          ),
-        ),
-      );
 }
