@@ -1,3 +1,4 @@
+import 'package:pred/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen7 extends StatelessWidget {
@@ -20,13 +21,13 @@ class OnboardingScreen7 extends StatelessWidget {
             ),
             Expanded(child: Container()),
             const Text(
-              "Your Title Goes",
+              welcomeLine,
               style: TextStyle(
                   color: Color(0xFF3F3849),
                   fontSize: 32,
                   fontWeight: FontWeight.w800),
             ),
-            const Text("Here",
+            const Text("PRED",
                 style: TextStyle(
                     color: Color(0xFF6464FF),
                     fontSize: 32,
@@ -35,7 +36,7 @@ class OnboardingScreen7 extends StatelessWidget {
               height: 20,
             ),
             const Text(
-              "You can schedule your work with us more easily",
+              tagline,
               style: TextStyle(
                   color: Color(0xFF3F3849),
                   fontSize: 15,

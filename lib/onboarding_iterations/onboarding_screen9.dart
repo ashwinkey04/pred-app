@@ -1,3 +1,4 @@
+import 'package:pred/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
@@ -83,14 +84,11 @@ class _OnboardingScreen9State extends State<OnboardingScreen9> {
                       fontSize: 32,
                       fontWeight: FontWeight.w700),
                   children: [
-                    TextSpan(text: "Your Long Title "),
-                    TextSpan(
-                        text: "Goes",
-                        style: TextStyle(color: Color(0xFF5397FD))),
+                    TextSpan(text: welcomeLine),
                   ]),
             ),
             const Text(
-              "Here",
+              "PRED",
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Color(0xFF6464FF),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "305180421912",
+    "project_id": "pred-fyp",
+    "storage_bucket": "pred-fyp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305180421912:android:0524717f91e0a04a17786d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_onboarding_templates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305180421912-0pvdmtqqiu22ld2bvgv0j5i88od2k4ff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGWbM11CfIOiVtAuCKH60UROF-5afGtq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305180421912-0pvdmtqqiu22ld2bvgv0j5i88od2k4ff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
