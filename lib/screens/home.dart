@@ -1,21 +1,35 @@
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:pred/screens/onboarding_screen.dart';
 import 'package:pred/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
-class OnboardingScreen9 extends StatefulWidget {
-  const OnboardingScreen9({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<OnboardingScreen9> createState() => _OnboardingScreen9State();
+  State<Home> createState() => _HomeState();
 }
 
-class _OnboardingScreen9State extends State<OnboardingScreen9> {
+class _HomeState extends State<Home> {
   List<int> data = List.generate(9, (index) => index);
   int _focusedIndex = 8;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  logout(context) async {
+    FirebaseAuth.instance.signOut();
+    Navigator.pop(context);
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => const OnboardingScreen(),
+        ),
+        (route) => false);
   }
 
   Widget _buildItemList(BuildContext context, int index) {
@@ -99,7 +113,7 @@ class _OnboardingScreen9State extends State<OnboardingScreen9> {
               height: 16,
             ),
             const Text(
-              "Create and sell your own collectible and become hte richest NFT in the world ",
+              "Choose your favorite stocks",
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Color(0xFF828282), fontWeight: FontWeight.w500),
@@ -111,8 +125,7 @@ class _OnboardingScreen9State extends State<OnboardingScreen9> {
   Widget _buildButtonGetStarted(context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: GestureDetector(
-          onTap: () =>
-              Navigator.pushReplacementNamed(context, "/", arguments: 0),
+          onTap: () => logout(context),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: 70,

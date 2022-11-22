@@ -20,13 +20,12 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 
-  Positioned _buildLogoIcon() {
-    return Positioned(
-      top: 221,
-      left: 44,
+  Widget _buildLogoIcon() {
+    return Center(
       child: GestureDetector(
           onTap: () {},
           child: Container(
+              margin: const EdgeInsets.only(bottom: 160),
               width: 340,
               height: 340,
               padding: const EdgeInsets.all(16),
@@ -122,7 +121,7 @@ class OnboardingScreen extends StatelessWidget {
           width: 56,
           height: 56,
           decoration: BoxDecoration(
-              color: primaryColor, borderRadius: BorderRadius.circular(50)),
+              color: Colors.black, borderRadius: BorderRadius.circular(50)),
           child: const Icon(Icons.arrow_forward_ios, color: Colors.white),
         ),
       ),
