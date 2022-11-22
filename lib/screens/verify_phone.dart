@@ -1,5 +1,10 @@
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pred/screens/home.dart';
 import 'package:pred/utils/numeric_pad.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../utils/constants.dart';
 
@@ -11,7 +16,71 @@ class VerifyPhone extends StatefulWidget {
 }
 
 class _VerifyPhoneState extends State<VerifyPhone> {
-  String num = '';
+  String? _verificationCode;
+
+  bool isLoading = true;
+  bool codeSent = false;
+  String otpText = "Sending OTP to\n";
+  int time = 60;
+  bool resendOTPButton = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _verifyPhone();
+  }
+
+  _verifyPhone() async {
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: widget.phonenumber.replaceAll(' ', ''),
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) async {
+            if (value.user != null) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  CupertinoPageRoute(builder: (context) => const Home()),
+                  (route) => false);
+            }
+          });
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          debugPrint(e.message);
+          Alert(
+            context: context,
+            type: AlertType.error,
+            title: "Failed",
+            desc: "Sending OTP failed",
+          ).show();
+          Navigator.of(context).pop();
+        },
+        codeSent: (String verficationID, int? resendToken) {
+          _verificationCode = verficationID;
+          otpText = 'Code is sent to\n';
+          isLoading = false;
+          codeSent = true;
+          setState(() {});
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
+        timeout: Duration(seconds: 15),
+      );
+    } catch (e) {
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Error",
+        desc: "OTP Invalid",
+      ).show();
+    }
+  }
+
+  String otp = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +109,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 padding: const EdgeInsets.all(12.0),
                 child: Center(
                   child: Text(
-                    "Code is sent to " + widget.phonenumber,
+                    otpText + widget.phonenumber,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -56,12 +125,12 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    buildNumberr(num, 0),
-                    buildNumberr(num, 1),
-                    buildNumberr(num, 2),
-                    buildNumberr(num, 3),
-                    buildNumberr(num, 4),
-                    buildNumberr(num, 5),
+                    buildNumberr(otp, 0),
+                    buildNumberr(otp, 1),
+                    buildNumberr(otp, 2),
+                    buildNumberr(otp, 3),
+                    buildNumberr(otp, 4),
+                    buildNumberr(otp, 5),
                   ],
                 ),
               ),
@@ -78,28 +147,102 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: primaryColor,
-                                // gradient: const LinearGradient(
-                                //   begin: Alignment.topLeft,
-                                //   end: Alignment.bottomRight,
-                                //   colors: gradientList,
-                                // )
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "Verify and create account",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                            onTap: () async {
+                              if (codeSent) {
+                                // Verify
+                                if (otp.length == 6) {
+                                  setState(() {
+                                    isLoading = true;
+                                    otpText = 'Verifying\n';
+                                  });
+                                  try {
+                                    await FirebaseAuth.instance
+                                        .signInWithCredential(
+                                            PhoneAuthProvider.credential(
+                                                verificationId:
+                                                    _verificationCode!,
+                                                smsCode: otp))
+                                        .then((value) async {
+                                      if (value.user != null) {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (context) =>
+                                                  const Home(),
+                                            ),
+                                            (route) => false);
+                                      }
+                                    });
+                                  } catch (e) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    FocusScope.of(context).unfocus();
+
+                                    Alert(
+                                      context: context,
+                                      type: AlertType.error,
+                                      title: "Failed",
+                                      desc: 'OTP Verification failed.',
+                                    ).show();
+                                  }
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                              }
+                            },
+                            child: isLoading
+                                ? Shimmer.fromColors(
+                                    baseColor: gradientList[0],
+                                    highlightColor: gradientList[2],
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: codeSent
+                                            ? primaryColor
+                                            : Colors.grey[500],
+                                        // gradient: const LinearGradient(
+                                        //   begin: Alignment.topLeft,
+                                        //   end: Alignment.bottomRight,
+                                        //   colors: gradientList,
+                                        // )
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Verify Code",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: codeSent
+                                          ? primaryColor
+                                          : Colors.grey[500],
+                                      // gradient: const LinearGradient(
+                                      //   begin: Alignment.topLeft,
+                                      //   end: Alignment.bottomRight,
+                                      //   colors: gradientList,
+                                      // )
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Verify Code",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
                           ),
                         )
                       ],
@@ -110,10 +253,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               Padding(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: NumericPad(onNumberSelected: (value) {
-                    if (value >= 0) {
-                      num += value.toString();
-                    } else if (value == -1 && num.isNotEmpty) {
-                      num = num.substring(0, num.length - 1);
+                    if (value >= 0 && otp.length < 6) {
+                      otp += value.toString();
+                    } else if (value == -1 && otp.isNotEmpty) {
+                      otp = otp.substring(0, otp.length - 1);
                     }
                     setState(() {});
                   }))
@@ -135,7 +278,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: const <BoxShadow>[
                 BoxShadow(
-                  color: primaryColor,
+                  color: Colors.black38,
                   offset: Offset(0, 0),
                   blurRadius: 8,
                 )
@@ -144,10 +287,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             child: Text(
               number.length >= (position + 1) ? number[position] : ' ',
               style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 106, 106, 106)),
             ),
           ),
         ),

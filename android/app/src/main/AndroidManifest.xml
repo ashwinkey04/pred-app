@@ -2,7 +2,7 @@
     package="com.example.flutter_onboarding_templates">
    <application
         android:label="flutter_onboarding_templates"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

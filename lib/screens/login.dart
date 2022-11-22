@@ -1,6 +1,9 @@
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:pred/screens/verify_phone.dart';
 import 'package:pred/utils/numeric_pad.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../utils/constants.dart';
 
@@ -13,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   String phonenumber = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,12 +83,36 @@ class _LoginScreenState extends State<LoginScreen> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VerifyPhone(
-                                          phonenumber: phonenumber,
-                                        )));
+                            if (phonenumber.length == 10) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VerifyPhone(
+                                            phonenumber: '+91 ' + phonenumber,
+                                          )));
+                            } else {
+                              Alert(
+                                  context: context,
+                                  type: AlertType.error,
+                                  title: "Try again",
+                                  desc: "Enter Valid Phone Number",
+                                  style: const AlertStyle(
+                                    titleStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  buttons: [
+                                    DialogButton(
+                                      child: const Text(
+                                        "Cancel",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      color: primaryColor,
+                                    ),
+                                  ]).show();
+                            }
                           },
                           child: Container(
                             margin: const EdgeInsets.all(8),
@@ -110,14 +138,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               NumericPad(
                 onNumberSelected: (value) {
-                  setState(() {
-                    if (value != -1) {
-                      phonenumber = phonenumber + value.toString();
-                    } else {
-                      phonenumber =
-                          phonenumber.substring(0, phonenumber.length - 1);
-                    }
-                  });
+                  if (value != -1 && phonenumber.length < 10) {
+                    phonenumber = phonenumber + value.toString();
+                    setState(() {});
+                  } else if (value == -1) {
+                    phonenumber =
+                        phonenumber.substring(0, phonenumber.length - 1);
+                    setState(() {});
+                  }
                 },
               ),
             ],
