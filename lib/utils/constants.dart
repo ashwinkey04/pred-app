@@ -53,3 +53,28 @@ Widget buildButtonNext(context) => GestureDetector(
         ),
       ),
     );
+
+Widget buildLogoIcon() {
+  return Hero(tag: "logo",
+    child: Center(
+      child: GestureDetector(
+          onTap: () {},
+          child: Container(
+              margin: const EdgeInsets.only(bottom: 160),
+              width: 340,
+              height: 340,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      blurRadius: 30,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]),
+              child: Center(child: Image.asset('assets/imgs/onboard.png')))),
+    ),
+  );
+}

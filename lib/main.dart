@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pred/screens/login.dart';
+import 'package:pred/screens/splash.dart';
 import 'package:pred/screens/verify_phone.dart';
 import 'screens/onboarding_screen.dart';
 
@@ -23,11 +24,11 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/',
+        initialRoute: '/splash',
         routes: {
           '/': (context) => const OnboardingScreen(),
+          '/splash': (context) => const Splash(),
           '/login': (context) => const LoginScreen(),
-          '/verifyPhone': (context) => VerifyPhone(phonenumber: '',),
         });
   }
 }
