@@ -4,14 +4,8 @@ Your Intelligent, In-pocket trading advisor
 
 ## Screenshots
 
-<a href="https://ibb.co/7nbF66C"><img src="https://i.ibb.co/Vg38PP9/Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-03-43.png" alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-03-43" height="300" ></a>
-<a href="https://ibb.co/ZhR038J"><img src="https://i.ibb.co/vJCSbPB/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-00.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-00" height="300" ></a>
-<a href="https://ibb.co/82f2WF6"><img src="https://i.ibb.co/XpKphmS/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-02.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-02" height="300" ></a>
-<a href="https://ibb.co/Yb1V813"><img src="https://i.ibb.co/M9tJpts/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-04.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-04" height="300" ></a>
-<a href="https://ibb.co/jbmkBtg"><img src="https://i.ibb.co/WGZvqCg/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-07.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-07" height="300" ></a>
-<a href="https://ibb.co/smJpTWV"><img src="https://i.ibb.co/yfBmz4Q/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-10.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-10" height="300" ></a>
-<a href="https://ibb.co/bmyysJJ"><img src="https://i.ibb.co/8sRRrcc/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-12.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-12" height="300" ></a>
-<a href="https://ibb.co/RvnmK2r"><img src="https://i.ibb.co/LkwWySj/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-14.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-14" height="300" ></a>
-<a href="https://ibb.co/Xsp6vtj"><img src="https://i.ibb.co/852GS9N/ Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-19.png"  alt="Simulator-Screen-Shot-i-Phone-11-Pro-Max-2021-12-08-at-13-04-19" height="300" ></a>
 
-Designs by https://ui8.net/himanshu-75673a
+![splash](https://user-images.githubusercontent.com/20596763/203551818-584cb41e-b680-487d-8292-d77776a48c0e.png)
+![login](https://user-images.githubusercontent.com/20596763/203551810-ddf379d5-13ab-4a1f-90ad-4b4bdab5235a.png)
+![fav](https://user-images.githubusercontent.com/20596763/203551825-f3357cf2-d218-42a3-b86a-3d58937b4cf5.png)
+![home](https://user-images.githubusercontent.com/20596763/203551836-859b828b-22ed-4187-86ec-097b913b8514.png)
