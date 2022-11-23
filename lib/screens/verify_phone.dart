@@ -1,12 +1,17 @@
-import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pred/screens/favourites.dart';
 import 'package:pred/screens/home.dart';
+import 'package:pred/screens/sign_up_first_time.dart';
+import 'package:pred/utils/nav_helper.dart';
 import 'package:pred/utils/numeric_pad.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../utils/constants.dart';
+import 'onboarding_screen.dart';
 
 class VerifyPhone extends StatefulWidget {
   final String phonenumber;
@@ -30,6 +35,20 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     _verifyPhone();
   }
 
+  initialiseFirebase() async {
+    DocumentSnapshot? userData;
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+      debugPrint('UID ${FirebaseAuth.instance.currentUser?.uid}');
+      userData = await users.doc(FirebaseAuth.instance.currentUser?.uid).get();
+    } catch (e) {
+      print("error getting user data $e");
+      return "error";
+    }
+    return userData.exists == true ? userData.data() : false;
+  }
+
   _verifyPhone() async {
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
@@ -39,10 +58,17 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  CupertinoPageRoute(builder: (context) => const Home()),
-                  (route) => false);
+              var firebaseData = await initialiseFirebase();
+              // debugPrint('FBDATA $firebaseData');
+              if (firebaseData == false) {
+                nativePushReplacement(context, SignUpFirstTime());
+              } else if (firebaseData != "error") {
+                // debugPrint('Dataa: $firebaseData');
+                nativePushReplacement(
+                    context, HomeScreen(userData: firebaseData));
+              } else {
+                nativePushReplacement(context, const OnboardingScreen());
+              }
             }
           });
         },
@@ -164,13 +190,22 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                                 smsCode: otp))
                                         .then((value) async {
                                       if (value.user != null) {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            CupertinoPageRoute(
-                                              builder: (context) =>
-                                                  const Home(),
-                                            ),
-                                            (route) => false);
+                                        var firebaseData =
+                                            await initialiseFirebase();
+                                        debugPrint('FBDATA $firebaseData');
+                                        if (firebaseData == false) {
+                                          nativePushReplacement(
+                                              context, SignUpFirstTime());
+                                        } else if (firebaseData != "error") {
+                                          debugPrint('Dataa: $firebaseData');
+                                          nativePushReplacement(
+                                              context,
+                                              ChooseFavorites(
+                                                  userData: firebaseData));
+                                        } else {
+                                          nativePushReplacement(context,
+                                              const OnboardingScreen());
+                                        }
                                       }
                                     });
                                   } catch (e) {

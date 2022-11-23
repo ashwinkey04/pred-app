@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pred/screens/login.dart';
+import 'package:pred/utils/nav_helper.dart';
 
 import '../utils/constants.dart';
 
@@ -12,7 +14,7 @@ class OnboardingScreen extends StatelessWidget {
       body: Stack(
         children: [
           _buildImageBackground(context),
-          _buildLogoIcon(),
+          buildLogoIcon(),
           _buildBottomCard(context),
           _buildButtonNext(context)
         ],
@@ -20,39 +22,13 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLogoIcon() {
-    return Center(
-      child: GestureDetector(
-          onTap: () {},
-          child: Container(
-              margin: const EdgeInsets.only(bottom: 160),
-              width: 340,
-              height: 340,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      blurRadius: 30,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]),
-              child: Center(child: Image.asset('assets/imgs/onboard.png')))),
-    );
-  }
-
   Widget _buildImageBackground(context) {
     return Container(
       // Add box decoration
       decoration: const BoxDecoration(
-        // Box decoration takes a gradient
         gradient: LinearGradient(
-          // Where the linear gradient begins and ends
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          // Add one stop for each color. Stops should increase from 0 to 1
           stops: [0.1, 0.5, 0.7, 0.9],
           colors: gradientList,
         ),
@@ -114,7 +90,7 @@ class OnboardingScreen extends StatelessWidget {
       right: 53,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/login", arguments: 3);
+          nativePush(context, const LoginScreen());
         },
         child: Container(
           padding: const EdgeInsets.all(12),

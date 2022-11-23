@@ -1,6 +1,6 @@
-# Flutter Onboarding Templates
+# PRED
 
-A simple set of 9 onboarding screens.
+Your Intelligent, In-pocket trading advisor
 
 ## Screenshots
 

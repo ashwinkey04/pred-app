@@ -1,166 +1,150 @@
-import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pred/screens/favourites.dart';
 import 'package:pred/screens/onboarding_screen.dart';
 import 'package:pred/utils/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:pred/utils/nav_helper.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  final Map? userData;
+  const HomeScreen({Key? key, this.userData}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
-  List<int> data = List.generate(9, (index) => index);
-  int _focusedIndex = 8;
-
+class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  logout(context) async {
-    FirebaseAuth.instance.signOut();
-    Navigator.pop(context);
-    Navigator.pushAndRemoveUntil(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => const OnboardingScreen(),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(0.0),
+        child: AppBar(
+          elevation: 0,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+          backgroundColor: Color.fromARGB(255, 77, 77, 255),
         ),
-        (route) => false);
-  }
-
-  Widget _buildItemList(BuildContext context, int index) {
-    return SizedBox(
-      width: 180,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      ),
+      body: Stack(
         children: [
           Container(
-            width: 180,
-            height: 270,
-            decoration: BoxDecoration(
-                color: const Color(0xFFC4C4C4),
-                borderRadius: BorderRadius.circular(32)),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomLeft,
+                stops: [0.1, 0.5, 0.7, 0.9],
+                colors: [
+                  Color.fromARGB(255, 77, 77, 255),
+                  Color.fromARGB(255, 100, 100, 255),
+                  Color.fromARGB(255, 125, 125, 252),
+                  Color.fromARGB(255, 148, 148, 254),
+                ],
+              ),
+            ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SafeArea(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Welcome',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        Text(
+                          widget.userData!['name'],
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          iconSize: 32,
+                          color: Colors.white,
+                          icon: const Icon(Icons.favorite),
+                          onPressed: () {
+                            nativePush(context,
+                                ChooseFavorites(userData: widget.userData));
+                          },
+                        ),
+                        IconButton(
+                          iconSize: 32,
+                          color: Colors.white,
+                          onPressed: () {
+                            Alert(
+                                image: const Icon(
+                                  Icons.logout_rounded,
+                                  size: 64,
+                                  color: Colors.black,
+                                ),
+                                context: context,
+                                desc: 'Do you want to log out?',
+                                buttons: [
+                                  DialogButton(
+                                      color: primaryColor,
+                                      child: const Text(
+                                        'Log out',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        logout(context);
+                                      }),
+                                  DialogButton(
+                                      color: Colors.black,
+                                      child: const Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      })
+                                ]).show();
+                          },
+                          icon: const Icon(
+                            Icons.logout_rounded,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            )),
+          )
         ],
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildTextContent(),
-            Expanded(
-                child: ScrollSnapList(
-              listController: ScrollController(initialScrollOffset: 270 * 9),
-              onItemFocus: (p0) => setState(() {
-                _focusedIndex = p0;
-              }),
-              itemBuilder: _buildItemList,
-              itemSize: 180,
-              dynamicItemSize: true,
-              onReachEnd: () {},
-              itemCount: data.length,
-            )),
-            _buildDots(context),
-            const SizedBox(
-              height: 50,
-            ),
-            _buildButtonGetStarted(context),
-            const SizedBox(
-              height: 16,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextContent() => Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 74,
-            ),
-            RichText(
-              text: const TextSpan(
-                  style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700),
-                  children: [
-                    TextSpan(text: welcomeLine),
-                  ]),
-            ),
-            const Text(
-              "PRED",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Color(0xFF6464FF),
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            const Text(
-              "Choose your favorite stocks",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Color(0xFF828282), fontWeight: FontWeight.w500),
-            )
-          ],
-        ),
-      );
-
-  Widget _buildButtonGetStarted(context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: GestureDetector(
-          onTap: () => logout(context),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 70,
-            decoration: BoxDecoration(
-                color: const Color(0xFF333333),
-                borderRadius: BorderRadius.circular(35)),
-            child: const Center(
-                child: Text(
-              "Get Started",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-            )),
-          ),
-        ),
-      );
-
-  Widget _buildDots(context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(9, (index) => buildDot(index: index)),
-    );
-  }
-
-  AnimatedContainer buildDot({int? index}) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 50),
-      margin: const EdgeInsets.only(right: 5),
-      height: 10,
-      width: 10,
-      decoration: BoxDecoration(
-        color: _focusedIndex == index
-            ? const Color(0xFF333333)
-            : const Color(0xFFF2F2F2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-    );
+  logout(context) async {
+    FirebaseAuth.instance.signOut();
+    Navigator.pop(context);
+    nativePushUntil(context, const OnboardingScreen());
   }
 }
