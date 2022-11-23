@@ -1,9 +1,7 @@
-import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:pred/screens/verify_phone.dart';
 import 'package:pred/utils/numeric_pad.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../utils/constants.dart';
 
