@@ -1,9 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pred/screens/home.dart';
-import 'package:pred/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pred/utils/constants.dart';
 import 'package:pred/utils/firestore_helper.dart';
