@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => VerifyPhone(
-                                            phonenumber: '+91 ' + phonenumber,
+                                            phonenumber: '+91 $phonenumber' ,
                                           )));
                             } else {
                               Alert(
@@ -101,13 +101,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   buttons: [
                                     DialogButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      color: primaryColor,
                                       child: const Text(
                                         "Cancel",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
-                                      color: primaryColor,
                                     ),
                                   ]).show();
                             }

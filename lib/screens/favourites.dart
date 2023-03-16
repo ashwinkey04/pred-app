@@ -94,7 +94,7 @@ class _ChooseFavoritesState extends State<ChooseFavorites> {
         child: AppBar(
           elevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle.light,
-          backgroundColor: Color.fromARGB(255, 77, 77, 255),
+          backgroundColor: const Color.fromARGB(255, 77, 77, 255),
         ),
       ),
       body: SafeArea(

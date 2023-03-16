@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -76,11 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     for (var i = 0; i < sentiList.length; i++) {
                       s.add(sentiList[i].data());
                     }
-                    return Container(
+                    return SizedBox(
                       height: MediaQuery.of(context).size.height * .6,
                       width: MediaQuery.of(context).size.width * .98,
-                      // height: double.infinity,
-                      // width: double.infinity,
                       child: ListView.builder(
                         itemCount: s.length,
                         itemBuilder: (context, index) {
@@ -306,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BoxShadow(
                 offset: const Offset(0, 12),
                 blurRadius: 12,
-                color: Color.fromARGB(255, 56, 56, 56).withOpacity(0.14))
+                color: const Color.fromARGB(255, 56, 56, 56).withOpacity(0.14))
           ],
         ),
         child: Row(
@@ -341,10 +338,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   '${rating == Rating.buy ? 'BUY' : rating == Rating.sell ? 'SELL' : 'HOLD'} : ${score.substring(0, 5)}%',
                   style: TextStyle(
                       color: rating == Rating.buy
-                          ? Color.fromARGB(255, 0, 255, 8)
+                          ? const Color.fromARGB(255, 0, 255, 8)
                           : rating == Rating.sell
-                              ? Color.fromARGB(255, 189, 29, 29)
-                              : Color.fromARGB(255, 231, 239, 7),
+                              ? const Color.fromARGB(255, 189, 29, 29)
+                              : const Color.fromARGB(255, 231, 239, 7),
                       fontSize: 18,
                       fontWeight: FontWeight.w800),
                 ),

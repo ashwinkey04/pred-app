@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:pred/screens/favourites.dart';
 import 'package:pred/screens/home.dart';
 import 'package:pred/screens/onboarding_screen.dart';
 import 'package:pred/screens/sign_up_first_time.dart';
@@ -88,7 +87,7 @@ class _SplashState extends State<Splash> {
       var firebaseData = await initialiseFirebase();
       debugPrint('FBDATA $firebaseData');
       if (firebaseData == false) {
-        nativePushUntil(context, SignUpFirstTime());
+        nativePushUntil(context, const SignUpFirstTime());
       } else if (firebaseData != "error") {
         debugPrint('Dataa: $firebaseData');
         nativePushUntil(context, HomeScreen(userData: firebaseData));

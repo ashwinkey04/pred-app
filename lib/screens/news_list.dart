@@ -1,13 +1,9 @@
 import 'package:link_preview_generator/link_preview_generator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pred/screens/favourites.dart';
 import 'package:pred/screens/onboarding_screen.dart';
-import 'package:pred/utils/constants.dart';
 import 'package:pred/utils/firestore_helper.dart';
 import 'package:pred/utils/nav_helper.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsList extends StatefulWidget {
@@ -58,7 +54,7 @@ class _NewsListState extends State<NewsList> {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: price == null
-                  ? SizedBox(
+                  ? const SizedBox(
                       height: 12,
                       width: 12,
                       child: CircularProgressIndicator(
@@ -107,9 +103,9 @@ class _NewsListState extends State<NewsList> {
                   InkWell(
                     onTap: () async {
                       // Open URL
-                      final _url = Uri.parse(newsList[index]['url']);
-                      if (!await launchUrl(_url)) {
-                        throw Exception('Could not launch $_url');
+                      final url = Uri.parse(newsList[index]['url']);
+                      if (!await launchUrl(url)) {
+                        throw Exception('Could not launch $url');
                       } else {}
                     },
                     child: Container(

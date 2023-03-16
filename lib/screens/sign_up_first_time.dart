@@ -17,7 +17,6 @@ class _SignUpFirstTimeState extends State<SignUpFirstTime> {
   bool entered = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     anim();
   }
