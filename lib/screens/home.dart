@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pred/screens/favourites.dart';
 import 'package:pred/screens/onboarding_screen.dart';
 import 'package:pred/utils/constants.dart';
+import 'package:pred/utils/firestore_helper.dart';
 import 'package:pred/utils/nav_helper.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -15,11 +18,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future? favoriteDetails;
+  Future? senti;
 
   @override
   void initState() {
     super.initState();
+    fillFav();
+  }
+
+  fillFav() async {
+    var fav = widget.userData!['favoriteStocks'][0];
+    senti = FirestoreHelper.fetchSentiments(fav);
   }
 
   @override
@@ -162,14 +171,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: (){
-
-                },
-                child: picksTile(
-                    context,
-                    'https://assets-netstorage.groww.in/stock-assets/logos/GSTK500325.png',
-                    'Reliance',
-                    true),
+                onTap: () async {},
+                child: FutureBuilder(
+                    future: senti,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var senti = snapshot.data as DocumentSnapshot;
+                        Map s = senti.data() as Map;
+                        Map t = senti.data() as Map;
+                        return picksTile(
+                            context,
+                            'https://assets-netstorage.groww.in/stock-assets/logos/GSTK500325.png',
+                            'Reliance',
+                            true,
+                            (s['sentiment_score']
+                                        [s['sentiment_score'].keys.first] *
+                                    100)
+                                .toString(),
+                            t['title'][t['title'].keys.first]);
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 98.0),
+                          child: Center(
+                            child: LoadingAnimationWidget.inkDrop(
+                                color: Colors.white, size: 64),
+                          ),
+                        );
+                      }
+                    }),
               ),
             ],
           )
@@ -178,8 +207,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Container picksTile(
-      BuildContext context, String image, String name, bool buy) {
+  Container picksTile(BuildContext context, String image, String name, bool buy,
+      String score, String title) {
     return Container(
         margin: const EdgeInsets.all(16.0),
         padding: const EdgeInsets.all(16.0),
@@ -218,19 +247,30 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  buy ? 'BUY' : 'SELL',
+                  '${buy ? 'BUY' : 'SELL'} : ${score.substring(0, 5)}%',
                   style: TextStyle(
                       color: buy
                           ? Color.fromARGB(255, 0, 255, 8)
                           : Color.fromARGB(255, 189, 29, 29),
                       fontSize: 18,
                       fontWeight: FontWeight.w800),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * .6,
+                  child: Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.grey[200],
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                  ),
                 )
               ],
             )
