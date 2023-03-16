@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pred/screens/login.dart';
 import 'package:pred/screens/splash.dart';
-import 'package:pred/screens/verify_phone.dart';
 import 'screens/onboarding_screen.dart';
 
 void main() async {

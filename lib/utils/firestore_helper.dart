@@ -16,6 +16,11 @@ class FirestoreHelper {
         await FirebaseFirestore.instance.collection('stocks').get();
     return snapshot.docs.map((e) => e.data()).toList();
   }
+  static fetchSentiments(String stock) async {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('news_sentiments').doc(stock).get();
+    return snapshot;
+  }
 
   static Future<Map> checkUserDocumentData() async {
     var uid = FirebaseAuth.instance.currentUser?.uid;

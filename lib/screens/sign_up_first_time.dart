@@ -83,6 +83,10 @@ class _SignUpFirstTimeState extends State<SignUpFirstTime> {
                               ),
                             ]),
                         child: TextField(
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600),
                           textInputAction: TextInputAction.go,
                           decoration: const InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.never,
