@@ -4,6 +4,17 @@ const primaryColor = Color(0xFF6464FF);
 const welcomeLine = "Welcome to";
 const tagline = "Your Intelligent, In-pocket trading advisor";
 
+enum Rating { buy, hold, sell }
+
+Rating sentimentToRating(String sentiment){
+  switch(sentiment){
+    case "positive": return Rating.buy;
+    case "neutral": return Rating.hold;
+    case "negative": return Rating.sell;
+    default: return Rating.hold;
+  }
+}
+
 const gradientList = [
   Color.fromARGB(255, 100, 100, 255),
   Color.fromARGB(255, 125, 125, 252),

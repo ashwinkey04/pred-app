@@ -16,6 +16,13 @@ class FirestoreHelper {
         await FirebaseFirestore.instance.collection('stocks').get();
     return snapshot.docs.map((e) => e.data()).toList();
   }
+
+  static pricePrediction(String stock) async {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('predicted_prices').doc(stock).get();
+    return snapshot;
+  }
+
   static fetchSentiments(String stock) async {
     final snapshot =
         await FirebaseFirestore.instance.collection('news_sentiments').doc(stock).get();
@@ -32,13 +39,10 @@ class FirestoreHelper {
       return {"exists": false};
     }
   }
-
-  static getRefMessageAndImage() async {
-    var doc = await FirebaseFirestore.instance
-        .collection('appInfo')
-        .doc('refInfo')
-        .get()
-        .then((value) => value.data());
-    return doc;
+  
+  static fetchPricePrediction(String stock) async {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('predicted_prices').doc(stock).get();
+    return snapshot;
   }
 }
