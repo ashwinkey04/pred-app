@@ -187,6 +187,7 @@ class _ChooseFavoritesState extends State<ChooseFavorites> {
             setState(() {
               buttonLoading = false;
             });
+            print(newUserData);
             nativePushUntil(
                 context,
                 HomeScreen(

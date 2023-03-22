@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => VerifyPhone(
-                                            phonenumber: '+91 $phonenumber' ,
+                                            phonenumber: '+91 $phonenumber',
                                           )));
                             } else {
                               Alert(
@@ -119,13 +119,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: primaryColor,
                             ),
                             child: const Center(
-                              child: Text(
-                                "Continue",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.white,
+                                size: 30,
                               ),
+                              // child: Text(
+                              //   "Continue",
+                              //   style: TextStyle(
+                              //       fontSize: 18,
+                              //       fontWeight: FontWeight.bold,
+                              //       color: Colors.white),
+                              // ),
                             ),
                           ),
                         ),

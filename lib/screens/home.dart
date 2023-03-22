@@ -143,6 +143,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   (scores[highestSentiment]['average'] * 100)
                                       .toString(),
                                   (s[index]['news_sentiments'][0]['title'])));
+                          // child: picksTile(
+                          //     context,
+                          //     nameAndLogo['logo'],
+                          //     nameAndLogo['name'],
+                          //     index == 1
+                          //         ? Rating.buy
+                          //         : index == 0
+                          //             ? Rating.sell
+                          //             : sentimentToRating(s[index]
+                          //                     ['news_sentiments'][0]
+                          //                 ['sentiment']),
+                          //     (scores[highestSentiment]['average'] * 100)
+                          //         .toString(),
+                          //     (s[index]['news_sentiments'][0]['title'])));
                         },
                       ),
                     );
@@ -248,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.black,
                         ),
                         context: context,
-                        desc: 'Do you want to log out?',
+                        desc: 'Sure to log out?',
                         buttons: [
                           DialogButton(
                               color: primaryColor,

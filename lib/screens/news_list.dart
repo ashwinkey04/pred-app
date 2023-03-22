@@ -26,7 +26,7 @@ class _NewsListState extends State<NewsList> {
   }
 
   Map<String, dynamic>? predictions;
-  double? price;
+  String? price;
 
   fetchPredictedPrice() async {
     predictions =
@@ -35,7 +35,9 @@ class _NewsListState extends State<NewsList> {
     String todayDate = predictions!.keys
         .reduce((a, b) => DateTime.parse(a).isAfter(DateTime.parse(b)) ? a : b);
     setState(() {
-      price = predictions![todayDate];
+      price = (predictions![todayDate]).toStringAsFixed(2);
+      var currency = widget.nameAndLogo!['currency'] ?? '₹';
+      price = currency + price!;
     });
     debugPrint("The prediction is: ${predictions![todayDate]}");
   }
@@ -60,7 +62,7 @@ class _NewsListState extends State<NewsList> {
                       child: CircularProgressIndicator(
                         color: Colors.white,
                       ))
-                  : Text('Prediction: ₹${price?.toStringAsFixed(2)} ',
+                  : Text('Prediction: $price ',
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12.0,

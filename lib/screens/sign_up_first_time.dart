@@ -104,8 +104,12 @@ class _SignUpFirstTimeState extends State<SignUpFirstTime> {
                             setState(() {
                               entered = true;
                             });
-                            nativePushReplacement(context,
-                                ChooseFavorites(userData: {'name': value}));
+                            nativePushReplacement(
+                                context,
+                                ChooseFavorites(userData: {
+                                  'name': value,
+                                  'favoriteStocks': const []
+                                }));
                           },
                         )),
                     const SizedBox(
